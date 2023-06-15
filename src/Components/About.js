@@ -1,43 +1,48 @@
 import React,{useState} from "react";
 
-export default function About() {
-    const [mystyle, dark] = useState( {
-        color:'white',
-        backgroundColor:'black'
+export default function About(props) {
+    // const [mystyle, dark] = useState( {
+    //     color:'white',
+    //     backgroundColor:'black'
         
-    })
+    // })
     
-    const [button,btnchange]=useState("Enable dark mode");
+    // const [button,btnchange]=useState("Enable dark mode");
 
-    const toggle=()=>{
-        if(mystyle.color==='white'){
-            dark(
-                {
-                    color:'black',
-                    backgroundColor:'white',
-                    border:'1px solid white'
+    // const toggle=()=>{
+    //     if(mystyle.color==='white'){
+    //         dark(
+    //             {
+    //                 color:'black',
+    //                 backgroundColor:'white',
+    //                 border:'1px solid white'
 
-                }  
-            );
-            btnchange("enable dark mode");
-        }
-        else{
-            dark(
-                {
-                    color:'white',
-                    backgroundColor:'black'
+    //             }  
+    //         );
+    //         btnchange("enable dark mode");
+    //     }
+    //     else{
+    //         dark(
+    //             {
+    //                 color:'white',
+    //                 backgroundColor:'black'
                     
-                }  
-                );
-                btnchange("enable light mode");
-        }
+    //             }  
+    //             );
+    //             btnchange("enable light mode");
+    //     }
         
+    // }
+    const mystyle={
+      color:props.mode==="dark"?"white":"grey",
+      backgroundColor:props.mode==="dark"?"grey":"white",
+      
+
     }
-   
 
   return (
-    <div className="container" style={mystyle} >
-      <h1 className="my-3">About me</h1>
+    <div className="container" style={mystyle}  >
+      <h1 className="my-3" >About me</h1>
       <div className="accordion accordion-flush" id="accordionFlushExample">
         <div className="accordion-item">
           <h2 className="accordion-header" id="flush-headingOne">
@@ -48,7 +53,7 @@ export default function About() {
               data-bs-toggle="collapse"
               data-bs-target="#flush-collapseOne"
               aria-expanded="false"
-              aria-controls="flush-collapseOne"
+              aria-controls="flush-collapseOne" 
             >
               Accordion Item #1
             </button>
@@ -125,7 +130,6 @@ export default function About() {
           </div>
         </div>
       </div>
-      <button onClick={toggle} type="button" className="btn btn-primary">{button}</button>
     </div>
   );
 }

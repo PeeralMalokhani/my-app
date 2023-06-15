@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 export default function TextForm(props) {
-  const speak = () => {
-    let msg = new SpeechSynthesisUtterance();
-    msg.Text = Text;
-    window.speechSynthesis.speak(msg);
-  };
+  
   const CopyText = () => {
     let text=document.getElementById("exampleFormControlTextarea1");
     text.select();
+    document.getSelection().removeAllRanges();
     navigator.clipboard.writeText(text.value);
   };
   const ExtraSpace = () => {
@@ -15,7 +12,6 @@ export default function TextForm(props) {
     settext(Newtext.join(" "));
     
   };
-  // It is targetted by the button 'speak':
 
   const Capitalize = () => {
     let newText = Text.toUpperCase();
@@ -40,14 +36,14 @@ export default function TextForm(props) {
   const handleOnChange = (event) => {
     settext(event.target.value);
   };
-  const [Text, settext] = useState("enter the text here");
+  const [Text, settext] = useState("");
   return (
     <>
       <div className="container"  style={{ color:props.mode==='dark'?"white":"black"}}>
         <h1>{props.heading}</h1>
         <div className="mb-3">
           <textarea
-            className="form-control" style={{ backgroundColor:props.mode==='light'?"white":"grey" ,color:props.mode==='dark'?"white":"black"}}
+            className="form-control" style={{ backgroundColor:props.mode==='light'?"white":"#dfc3c3" ,color:props.mode==='light'?"black":"black"}}
             value={Text}
             onChange={handleOnChange}
             id="exampleFormControlTextarea1"
@@ -55,30 +51,23 @@ export default function TextForm(props) {
           ></textarea>
         </div>
 
-        <button className="btn btn-primary mx-1" onClick={ToUpperCase} >
+        <button disabled={Text.length===0} className="btn btn-primary mx-1" onClick={ToUpperCase} >
           CamelCase
         </button>
-        <button className="btn btn-primary mx-1" onClick={Capitalize}>
+        <button disabled={Text.length===0} className="btn btn-primary mx-1" onClick={Capitalize}>
           Capitalize
         </button>
-        <button className="btn btn-primary mx-1" onClick={ClrText}>
+        <button disabled={Text.length===0} className="btn btn-primary mx-1" onClick={ClrText}>
           Clear Text
         </button>
-        <button
-          type="submit"
-          onClick={speak}
-          className="btn btn-warning mx-2 my-2"
-        >
-          Speak
-        </button>
-        <button
+        <button disabled={Text.length===0}
           type="submit"
           onClick={CopyText}
           className="btn btn-warning mx-2 my-2"
         >
           Copy
         </button>
-        <button
+        <button disabled={Text.length===0}
           type="submit"
           onClick={ExtraSpace}
           className="btn btn-warning mx-2 my-2"
@@ -91,7 +80,7 @@ export default function TextForm(props) {
         <p>
           {(Text.split(" ").length)-1} words and {Text.length} characters
         </p>
-        <p> {0.008 * Text.split(" ").length} minutes to read </p>
+        <p> {0.008 * Text.split(" ").filter((element)=>{return element.length!==0}).length} minutes to read </p>
         <h2> Preview</h2>
         <p> {Text.length>0?Text:"please enter something in text box"} </p>
       </div>
